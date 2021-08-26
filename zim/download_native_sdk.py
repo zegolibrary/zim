@@ -55,6 +55,7 @@ def main(argv):
 
     oss_url = args.sdk_download_url
     artifact_name = oss_url.split('/')[-1]
+    artifact_name = artifact_name.split('?')[0] # remove url version
 
     request = urllib2.Request(oss_url)
     print('\n --> Request: "{}"'.format(oss_url))
@@ -96,17 +97,3 @@ def main(argv):
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
