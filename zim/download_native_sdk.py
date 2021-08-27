@@ -12,6 +12,7 @@ import argparse
 
 THIS_SCRIPT_PATH = os.path.dirname(os.path.realpath(__file__))
 
+
 def __parse_args(args):
     args = args[1:]
     parser = argparse.ArgumentParser(description='The root build script.')
@@ -93,6 +94,21 @@ def main(argv):
 
     shutil.rmtree(tmp_dst_unzip_folder, ignore_errors=True)
     os.remove(artifact_path)
+
+    # Remove BuildConfig.class
+    for jar in os.listdir(dst_libs_path):
+        if '.jar' in jar:
+            os.chdir(dst_libs_path)
+            subprocess.check_call(['jar', 'xf', os.path.join(dst_libs_path, jar)])
+
+            for (root, dirs, files) in os.walk(dst_libs_path):
+                for f in files:
+                    if f == 'BuildConfig.class':
+                        os.remove(os.path.join(root, f))
+                        break
+
+            os.remove(os.path.join(dst_libs_path, jar))
+            subprocess.check_call(['jar', 'cf', os.path.join(dst_libs_path, jar), '.'])
 
 
 if __name__ == '__main__':
