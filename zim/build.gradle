@@ -27,6 +27,7 @@ android {
 
         workingDir './'
         commandLine "python", "download_native_sdk.py", "--sdk_download_url", "https://storage.zego.im/zim/sdk/android/ZIM-main-android-shared-java.zip", "--sdk_zip_root_folder", ""
+    }
     
     tasks.withType(JavaCompile) {
         preBuild.dependsOn 'downloadSDK'
